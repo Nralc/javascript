@@ -5,7 +5,7 @@ var rockButt = document.body.querySelector('.rock');
 var paperButt = document.body.querySelector('.paper');
 var scissorButt = document.body.querySelector('.scissors');
 
-function checker(usersPick){
+function checker(){
     if(compChoiceGen > 0 && compChoiceGen < (1/3)){
         compChoice = "Rock";
     } else if(compChoiceGen > (1/3) && compChoiceGen < (2/3)){
@@ -35,17 +35,17 @@ function winnerPicker(){
 
 rockButt.addEventListener('click', () => {
     userChoice = rockButt.innerHTML;
-    checker(rockButt);
+    checker();
 });
 
 paperButt.addEventListener('click', () => {
     userChoice = paperButt.innerHTML;
-    checker(paperButt);
+    checker();
 });
 
 scissorButt.addEventListener('click', () => {
     userChoice = scissorButt.innerHTML;
-    checker(scissorButt);
+    checker();
 });
 
 

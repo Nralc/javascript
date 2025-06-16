@@ -5,11 +5,25 @@ var rockButt = document.body.querySelector('.rock');
 var paperButt = document.body.querySelector('.paper');
 var scissorButt = document.body.querySelector('.scissors');
 var resetButt = document.body.querySelector('.resetScore');
+var winner = document.body.querySelector('.winner');
+var record = document.body.querySelector('h2');
+
 const tally = {
     wins: 0,
     ties: 0,
     losses: 0
 }
+
+//load
+const scoreTally = JSON.parse(localStorage.getItem("tally"));
+if(scoreTally){
+    tally.wins = scoreTally.wins;
+    tally.ties = scoreTally.ties;
+    tally.losses = scoreTally.losses;
+}
+
+record.innerHTML = `Wins: ${tally.wins}&nbsp&nbsp&nbsp&nbsp  Ties: ${tally.ties}&nbsp&nbsp&nbsp&nbsp  Losses: ${tally.losses}`;
+
 
 function checker(){
     if(compChoiceGen > 0 && compChoiceGen < (1/3)){
@@ -26,16 +40,19 @@ function checker(){
 function details(result){
     if(result == 'win'){
         tally.wins += 1;
-        console.log(`Your choice: ${userChoice} Computer Choice: ${compChoice} Result: You win`);
+        winner.innerHTML = "You win!";
+        
     } else if(result == 'lose'){
         tally.losses += 1;
-        console.log(`Your choice: ${userChoice} Computer Choice: ${compChoice} Result: You lose`);
+        winner.innerHTML = "You lose!";
     } else if(result == 'tie'){
         tally.ties += 1;
-        console.log(`Your choice: ${userChoice} Computer Choice: ${compChoice} Result: You lose`);
+        winner.innerHTML = "It's a tie!";
     }
 
-    console.log(`Wins: ${tally.wins} Ties: ${tally.ties} Losses: ${tally.losses}`);
+    localStorage.setItem("tally", JSON.stringify(tally));
+    record.innerHTML = `Wins: ${tally.wins}&nbsp&nbsp&nbsp&nbsp  Ties: ${tally.ties}&nbsp&nbsp&nbsp&nbsp  Losses: ${tally.losses}`;
+
 }
 
 function winnerPicker(){
@@ -64,17 +81,17 @@ function winnerPicker(){
 }
 
 rockButt.addEventListener('click', () => {
-    userChoice = rockButt.innerHTML;
+    userChoice = "Rock";
     checker();
 });
 
 paperButt.addEventListener('click', () => {
-    userChoice = paperButt.innerHTML;
+    userChoice = "Paper";
     checker();
 });
 
 scissorButt.addEventListener('click', () => {
-    userChoice = scissorButt.innerHTML;
+    userChoice = "Scissors";
     checker();
 });
 
@@ -82,7 +99,11 @@ resetButt.addEventListener('click', () => {
     tally.wins = 0;
     tally.ties = 0;
     tally.losses = 0;
+    localStorage.removeItem("tally");
+    winner.innerHTML = "";
+    record.innerHTML = `Wins: ${tally.wins}&nbsp&nbsp&nbsp&nbsp  Ties: ${tally.ties}&nbsp&nbsp&nbsp&nbsp  Losses: ${tally.losses}`;
 });
+
 
 
 
